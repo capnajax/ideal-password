@@ -1,0 +1,30 @@
+{
+  "name": "ideal-password",
+  "version": "1.0.0",
+  "description": "Estimates the entropy of a password",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.ibm.com:thomas-wilkinson/password-entropy.git"
+  },
+  "bin": {
+    "entropy": "entropy.js"
+  },
+  "author": "Thomas D Wilkinson",
+  "license": "ISC",
+  "dependencies": {
+    "emoji-regex": "^9.0.0"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "entropy",
+    "password-strength",
+    "security"
+  ]
+}
