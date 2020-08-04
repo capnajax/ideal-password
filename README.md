@@ -4,7 +4,42 @@ Estimates the entropy of a password
 
 ## Usage
 
-TODOC
+### To use this in code
+
+```npm install ideal-password
+```
+
+In your code, measure entropy with this.
+
+```javascript
+const entropy = require('ideal-password');
+
+entropy('HueyDeweyLouie');
+/* Returns
+    {
+      "classNames": [       // see section on character classes below
+        "upperRoman",
+        "lowerRoman" ],
+      "length": 9,          // note this only counts unique characters
+      "entropy": 58.64573768438668,
+      "max_entropy_scale": 128,   // a suggested scale for bar graphs,
+                                  // note this can change in future versions
+      "acceptable": false,  // standard for "acceptable" and "ideal" can change
+      "ideal": false        // or be configurable in future versions
+    }
+ */
+```
+
+### On the command line
+
+```% npm install -g ideal-password
+
+% entropy HueyDeweyLouie
+Entropy score for "HueyDeweyLouie": 58.64573768438668
+  Unique characters : 9
+  Character classes : upperRoman,lowerRoman
+Password is not acceptable.
+```
 
 ## Forward Compatitibility Note
 
