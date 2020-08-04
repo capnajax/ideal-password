@@ -46,7 +46,7 @@ Password is not acceptable.
 Only the interface will be considered in selecting sematic versions. That is,
 the minor number will be advanced if a method or endpoint is added, and the
 major number will be advanced if there is a breaking change. Any updates to the
-formula for caulculating entropy, without interface changes, will be treated as
+formula for calculating entropy, without interface changes, will be treated as
 a tiny fix.
 
 ## Formula
@@ -63,7 +63,7 @@ A character class is a type of character. These character classes are identified
 * Arabic numerals
 * Uppercase Roman letter
 * Lowercase Roman letter
-* Special characters
+* Special characters `!"#$%&'()*+,-./:;<=>?`
 * Uppercase Greek letter
 * Lowercase Greek letter
 * Uppercase Cyrillic letter
@@ -78,6 +78,10 @@ The `Unknown` class can include burred Roman and Cyrillic letters.
 
 Each entropy class has a score that is loosely based on the log of the number
 possible characters in that class.
+
+As noted earlier, these character classes can be updated in future versions,
+and updates will not be considered "enhancements" or "breaking changes" for the
+purpose of semantic versioning.
 
 ### Examples
 
