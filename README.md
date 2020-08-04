@@ -102,7 +102,7 @@ Entropy score for "hueydeweylouie": 29.32286884219334
 Password is not acceptable.
 ```
 
-If we change on letter to an emoji, `HueyD🦆eweyLouie`, now we have a third
+If we change on letter to an emoji, `Huey🦆eweyLouie`, now we have a third
 character class. This ups the score to 100.
 
 ```$ entropy Huey🦆eweyLouie
