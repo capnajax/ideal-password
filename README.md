@@ -83,10 +83,11 @@ A character class is a type of character. These character classes are identified
 * Lowercase Greek letter
 * Uppercase Cyrillic letter
 * Lowercase Cyrillic letter
-* Hiragana
-* Katakana
-* Most Common Hanzi
-* Other Hanzi
+* Hangul (Korean)
+* Hiragana (Japanese)
+* Katakana (Japanese)
+* Most Common Hanzi (Chinese, Traditional and Simplified)
+* Other Hanzi (Chinese, Traditional and Simplified)
 * Unknown
 
 The `Unknown` class can include burred Roman and Cyrillic letters.
@@ -146,6 +147,10 @@ Password is not acceptable.
 ```
 
 ## Change history
+
+### v1.2.1
+
+* Added a Hangul (Korean) character class
 
 ### v1.2
 
