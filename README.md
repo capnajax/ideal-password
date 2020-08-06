@@ -1,6 +1,6 @@
 # password-entropy
 
-Estimates the entropy of a password, Key features:
+Estimates the entropy of a password. Key features:
 
 * Detects most frequently used passwords and common l33t-ized and mix-case
     versions of these passwords. For example, `password` is equivalent to
