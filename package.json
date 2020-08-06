@@ -1,10 +1,10 @@
 {
   "name": "ideal-password",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Estimates the entropy of a password",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,9 @@
   "directories": {
     "lib": "lib"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0"
+  },
   "keywords": [
     "entropy",
     "password-strength",
