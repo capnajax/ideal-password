@@ -15,7 +15,7 @@ const entropy = require('./lib/entropy');
       if (score.ideal) {
         console.log(`Password is ideal.`);
       } else {
-        console.log(`Password is acceptable nut not ideal.`);
+        console.log(`Password is acceptable but not ideal.`);
       }
     } else {
       console.log(`Password is not acceptable.`);
