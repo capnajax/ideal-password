@@ -1,6 +1,16 @@
 # password-entropy
 
-Estimates the entropy of a password
+Estimates the entropy of a password, Key features:
+
+* Detects most frequently used passwords and common l33t-ized and mix-case
+    versions of these passwords. For example, `password` is equivalent to
+    `passW0rd`.
+* Detects repeated characters and excludes them. For example `aaaaaaaaaaa`
+    gets the same score as `a` and `passwordpassword` gets the same score
+    as `password`.
+* Detects uppercase, lowercase, special, emoji, and several non-roman
+    character classes and gives credit for the number of character classes
+    represented.
 
 ## Usage
 
@@ -97,7 +107,7 @@ entropy score, so we come to a score of 58.6.
 ```$ entropy HueyDeweyLouie
 Entropy score for "HueyDeweyLouie": 58.64573768438668
   Unique characters : 9
-  Character classes : upperRoman,lowerRoman
+  Character classes : upper-roman,lower-roman
 Password is not acceptable.
 ```
 
@@ -107,7 +117,7 @@ unique characters is still the same (`hueydwloi`), the entropy is even worse.
 ```$ entropy hueydeweylouie
 Entropy score for "hueydeweylouie": 29.32286884219334
   Unique characters : 9
-  Character classes : lowerRoman
+  Character classes : lower-roman
 Password is not acceptable.
 ```
 
