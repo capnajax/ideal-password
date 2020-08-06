@@ -1,12 +1,23 @@
 # password-entropy
 
-Estimates the entropy of a password
+Estimates the entropy of a password. Key features:
+
+* Detects most frequently used passwords and common l33t-ized and mix-case
+    versions of these passwords. For example, `password` is equivalent to
+    `passW0rd`.
+* Detects repeated characters and excludes them. For example `aaaaaaaaaaa`
+    gets the same score as `a` and `passwordpassword` gets the same score
+    as `password`.
+* Detects uppercase, lowercase, special, emoji, and several non-roman
+    character classes and gives credit for the number of character classes
+    represented.
 
 ## Usage
 
 ### To use this in code
 
-```npm install ideal-password
+```sh
+npm install ideal-password
 ```
 
 In your code, measure entropy with this.
@@ -32,7 +43,8 @@ entropy('HueyDeweyLouie');
 
 ### On the command line
 
-```% npm install -g ideal-password
+```sh
+% npm install -g ideal-password
 
 % entropy HueyDeweyLouie
 Entropy score for "HueyDeweyLouie": 58.64573768438668
@@ -64,6 +76,9 @@ A character class is a type of character. These character classes are identified
 * Uppercase Roman letter
 * Lowercase Roman letter
 * Special characters `!"#$%&'()*+,-./:;<=>?`
+* Common Passwords (e.g. `Passw0rd` - treats entire common password as a
+    single token)
+* Emoji (complex emoji are treated as a single token)
 * Uppercase Greek letter
 * Lowercase Greek letter
 * Uppercase Cyrillic letter
@@ -92,7 +107,7 @@ entropy score, so we come to a score of 58.6.
 ```$ entropy HueyDeweyLouie
 Entropy score for "HueyDeweyLouie": 58.64573768438668
   Unique characters : 9
-  Character classes : upperRoman,lowerRoman
+  Character classes : upper-roman,lower-roman
 Password is not acceptable.
 ```
 
@@ -102,7 +117,7 @@ unique characters is still the same (`hueydwloi`), the entropy is even worse.
 ```$ entropy hueydeweylouie
 Entropy score for "hueydeweylouie": 29.32286884219334
   Unique characters : 9
-  Character classes : lowerRoman
+  Character classes : lower-roman
 Password is not acceptable.
 ```
 
@@ -112,6 +127,32 @@ character class. This ups the score to 100.
 ```$ entropy Huey🦆eweyLouie
 Entropy score for "Huey🦆eweyLouie": 100.09226935827951
   Unique characters : 9
-  Character classes : upperRoman,lowerRoman,emoji
+  Character classes : upper-roman,lower-roman,emoji
 Password is ideal.
 ```
+
+Common passwords or passwords that contain common passwords are treated
+harshly. A password that resembles a common password, `hell0hi`, got a
+low score of only 19. Notice the length is 3 because the `hello` was
+treated as a single "character" of class "common-password". Changing
+the `o` to a `0` did not help either. The `hi` at the end was treated as
+two roman letters.
+
+```$ entropy hell0hi
+Entropy score for "hell0hi": 18.761486434726418
+  Unique characters : 3
+  Character classes : common-passwords,lower-roman
+Password is not acceptable.
+```
+
+## Change history
+
+### v1.2
+
+* "common passwords" -- treats common passwords as an entropy class, reducing the
+  entropy of password that contains one of the common ones.
+
+### v1.1
+
+* test automation
+* bug fixes working with utf16 high/low surrogates. This affects emoji processing.

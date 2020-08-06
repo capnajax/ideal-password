@@ -1,6 +1,6 @@
 {
   "name": "ideal-password",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Estimates the entropy of a password",
   "main": "index.js",
   "scripts": {
