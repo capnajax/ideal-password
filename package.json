@@ -1,6 +1,6 @@
 {
   "name": "ideal-password",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Estimates the entropy of a password",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,12 @@
     "chai": "^4.2.0"
   },
   "keywords": [
+    "password",
     "entropy",
+    "strength",
+    "ideal-password",
+    "acceptable-password",
+    "password-entropy",
     "password-strength",
     "security"
   ]
