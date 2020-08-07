@@ -75,7 +75,7 @@ A character class is a type of character. These character classes are identified
 * Arabic numerals
 * Uppercase Roman letter
 * Lowercase Roman letter
-* Special characters `!"#$%&'()*+,-./:;<=>?`
+* Special characters `` !"#$%&'()*+,-./:;<=>?[\]^_` ``
 * Common Passwords (e.g. `Passw0rd` - treats entire common password as a
     single token)
 * Emoji (complex emoji are treated as a single token)
@@ -105,7 +105,8 @@ In our example `HueyDeweyLouie`, there are nine unique characters over two
 character classes. Each of those character classes adds ln(26) to the
 entropy score, so we come to a score of 58.6.
 
-```$ entropy HueyDeweyLouie
+```sh
+$ entropy HueyDeweyLouie
 Entropy score for "HueyDeweyLouie": 58.64573768438668
   Unique characters : 9
   Character classes : upper-roman,lower-roman
@@ -115,7 +116,8 @@ Password is not acceptable.
 If they were all in lowercase, `hueydeweylouie`, even though the number of
 unique characters is still the same (`hueydwloi`), the entropy is even worse.
 
-```$ entropy hueydeweylouie
+```sh
+$ entropy hueydeweylouie
 Entropy score for "hueydeweylouie": 29.32286884219334
   Unique characters : 9
   Character classes : lower-roman
@@ -125,7 +127,8 @@ Password is not acceptable.
 If we change on letter to an emoji, `Huey🦆eweyLouie`, now we have a third
 character class. This ups the score to 100.
 
-```$ entropy Huey🦆eweyLouie
+```sh
+$ entropy Huey🦆eweyLouie
 Entropy score for "Huey🦆eweyLouie": 100.09226935827951
   Unique characters : 9
   Character classes : upper-roman,lower-roman,emoji
@@ -139,7 +142,8 @@ treated as a single "character" of class "common-password". Changing
 the `o` to a `0` did not help either. The `hi` at the end was treated as
 two roman letters.
 
-```$ entropy hell0hi
+```sh
+$ entropy hell0hi
 Entropy score for "hell0hi": 18.761486434726418
   Unique characters : 3
   Character classes : common-passwords,lower-roman
@@ -147,6 +151,10 @@ Password is not acceptable.
 ```
 
 ## Change history
+
+### v1.3
+
+* Added configuratability
 
 ### v1.2.1
 

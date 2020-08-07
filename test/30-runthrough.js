@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  *  Runthrough test
  *  Exercise the functionality of `entropy` to ensure there are no crashes

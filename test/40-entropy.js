@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  *  Exercise the entropy calculator to ensure calculation behaves as expected.
  *  This WILL NOT check the numbers (as the formula is likely to be tweaked 
@@ -6,8 +8,6 @@
 
 const entropy = require('../lib/entropy');
 const expect = require('chai').expect;
-
-const longTextSample = require('fs').readFileSync(__dirname + '/longtextsample.txt');
 
 describe('Entropy Calculation test', function() {
 
@@ -52,7 +52,7 @@ describe('Entropy Calculation test', function() {
     expect(test4.entropy).to.be.greaterThan(test1.entropy);
   });
   it('entropy with special characters', function() {
-    test = function(e) {
+    let test = function(e) {
       expect(e.classNames).to.include('special');
       expect(e.length).to.be.equal(test2.length);
       expect(e.classNames.length).to.be.equal(test3.classNames.length);
@@ -65,7 +65,7 @@ describe('Entropy Calculation test', function() {
     expect(specialTest1.entropy).to.be.equal(specialTest2.entropy);
   });
   it('entropy with a complex emoji', function() {
-    test = function(e) {
+    let test = function(e) {
       expect(e.classNames).to.include('emoji');
       expect(e.length).to.be.equal(test2.length);
       expect(e.classNames.length).to.be.equal(test3.classNames.length);
@@ -80,7 +80,7 @@ describe('Entropy Calculation test', function() {
     expect(emojiTest2.entropy).to.be.equal(emojiTest3.entropy);
   });
   it('entropy with hanzi, common and rarer', function() {
-    test = function(e, c) {
+    let test = function(e, c) {
       expect(e.classNames).to.include(c);
       expect(e.length).to.be.equal(test2.length);
       expect(e.classNames.length).to.be.equal(test3.classNames.length);
