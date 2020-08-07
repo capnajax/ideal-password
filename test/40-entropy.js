@@ -29,6 +29,11 @@ describe('Entropy Calculation test', function() {
   let hanziTest2 = entropy('distance我我');
   let hanziTest3 = entropy('distance魏');
   let hanziTest4 = entropy('distance魏魏');
+  // hanzi test, mizing common and less-common characters
+  let hanziControl1 = entropy('我的心'); // three common characters
+  let hanziControl2 = entropy('魏柏特'); // three less-common characters
+  let hanziTest5 = entropy('我柏特'); // count as three less-common characters
+  let hanziTest6 = entropy('我的魏'); // count as three common charaters
   // bad password test
   let badPassword1 = entropy('123456789');
   let badPassword2 = entropy('12e456789');
@@ -96,6 +101,13 @@ describe('Entropy Calculation test', function() {
     expect(hanziTest3.entropy).to.be.equal(hanziTest4.entropy);
     // less common hanzi get a higher entropy score
     expect(hanziTest3.entropy).to.be.greaterThan(hanziTest1.entropy);
+
+    expect(hanziTest5.entropy).to.be.equal(hanziControl2.entropy);
+    expect(hanziTest5.classNames).to.include('hanzi');
+    expect(hanziTest5.classNames).to.not.include('common-hanzi');
+    expect(hanziTest6.entropy).to.be.equal(hanziControl1.entropy);
+    expect(hanziTest6.classNames).to.not.include('hanzi');
+    expect(hanziTest6.classNames).to.include('common-hanzi');
   });
   it('entropy with a bad password', function() {
     expect(control.entropy).to.be.greaterThan(badPassword1.entropy);

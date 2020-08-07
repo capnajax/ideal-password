@@ -1,6 +1,6 @@
-# password-entropy
+# ideal-password
 
-Estimates the entropy of a password. Key features:
+Password entropy test, loosely inspired by [XKCD](https://xkcd.com/936/). Key features:
 
 * Detects most frequently used passwords and common l33t-ized and mix-case
     versions of these passwords. For example, `password` is equivalent to
@@ -29,8 +29,8 @@ entropy('HueyDeweyLouie');
 /* Returns
     {
       "classNames": [       // see section on character classes below
-        "upperRoman",
-        "lowerRoman" ],
+        "upper-roman",
+        "lower-roman" ],
       "length": 9,          // note this only counts unique characters
       "entropy": 58.64573768438668,
       "max_entropy_scale": 128,   // a suggested scale for bar graphs,
@@ -93,23 +93,35 @@ as `HueyDwLoi`.
 
 A character class is a type of character. These character classes are identified:
 
-* Arabic numerals
-* Uppercase Roman letter
-* Lowercase Roman letter
-* Special characters `` !"#$%&'()*+,-./:;<=>?[\]^_` ``
-* Common Passwords (e.g. `Passw0rd` - treats entire common password as a
-    single token)
-* Emoji (complex emoji are treated as a single token)
-* Uppercase Greek letter
-* Lowercase Greek letter
-* Uppercase Cyrillic letter
-* Lowercase Cyrillic letter
-* Hangul (Korean)
-* Hiragana (Japanese)
-* Katakana (Japanese)
-* Most Common Hanzi (Chinese, Traditional and Simplified)
-* Other Hanzi (Chinese, Traditional and Simplified)
-* Unknown
+* `common-passwords` e.g. `Passw0rd`. Treats entire common password as a
+    single token, case- and l33t-insensitive, e.g. `password` and `Pa55w0rD`
+    are treated as the same.
+* `number` Arabic numerals
+* `lower-roman` Unaccented lowercase Roman alphabet
+* `upper-roman` Unaccented uppercase Roman alphabet
+* `extended-roman` Includes Latin 1 Supplement, Latins Extended A, B, C, D,
+    and E, IP Extensions, and Latin Extended Additional
+* `special` Includes `` !"#$%&'()*+,-./:;<=>?[\]^_` ``
+* `upper-greek` Unaccented uppercase Greek alphabet
+* `lower-greek` Unaccented lowercase Greek alphabet
+* `extended-greek` Includes letters from Greek Extended. For performance,
+    includes some unassigned code points within the Greek Extended range.
+* `upper-cyrillic` Unaccented uppercase Cyrillic alphabet
+* `lower-cyrillic` Unaccented lowercase Cyrillic alphabet
+* `extended-cyrillic` Includes letters from Cyrillic Supplement, Cyrillic
+    Extended A, B, and C, and Cyrillic letters not included in `upper-cyrillic`
+    or `lower-cyrillic`
+* `hiragana` Japanese Hiragana characters
+* `katakana` Japanese Hiragana characters
+* `bopomofo` Mandarin and Taiwanese phonetic symbols, includes characters from
+    [Bopomofo](https://www.unicode.org/charts/PDF/U3100.pdf) and [Bopomofo Extended](https://www.unicode.org/charts/PDF/U31A0.pdf) character sets.
+* `hangul` Korean Hangul characters
+* `common-hanzi` 100 most common Chinese characters, in both Traditional and
+    Simplified Chinese. Note results will never include both `common-hanzi`
+    and `hanzi`. If both types of characters exist, only one type will be
+    selected.
+* `hanzi` Chinese characters.
+* `emoji` Complex emoji are treated as single characters
 
 The `Unknown` class can include burred Roman and Cyrillic letters.
 
@@ -173,6 +185,38 @@ Password is not acceptable.
 
 ## Change history
 
+### v2.0 (future release)
+
+Version 2.0 will be a breaking change in that some vocabulary will change to
+bring this in line with Unicode standards:
+
+* `roman` becomes `latin`
+* `upper-roman` becomes `latin-capital`
+* `lower-roman` becomes `latin-small`
+* `extended-roman` becomes `latin-extended`
+* `upper-greek` becomes `greek-capital`
+* `lower-greek` becomes `greek-small`
+* `extended-greek` becomes `greek-extended`
+* `upper-cyrillic` becomes `cyrillic-capital`
+* `lower-cyrillic` becomes `cyrillic-small`
+* `extended-cyrillic` becomes `cyrillic-extended`
+* `common-hanzi` becomes `hanzi-common`
+
+However `common-passwords` will remain as `common-passwords`
+
+Also "classes" become "sets" and "characters" will usuall become "tokens".
+While the output object may also change to reflect this vocabulary change,
+members `entropy`, `ideal`, and `acceptable` will remain the same.
+
+No functionality will be removed, though, as always, the formula may be updated
+to account for more character sets or change the weight on existing ones.
+
+### v1.3.1
+
+* Added accented characters sers for Roman, Greek, and Cyrillic
+* Hanzi classes cancel, so mixing common and less-common Chinese characters
+  will not result in a higher score than using only less-common characters
+
 ### v1.3
 
 * Added configuratability for character sets and acceptable/ideal thresholds
@@ -184,7 +228,7 @@ Password is not acceptable.
 ### v1.2
 
 * "common passwords" -- treats common passwords as an entropy class, reducing the
-  entropy of password that contains one of the common ones.
+  entropy of password that contains one of the common ones
 
 ### v1.1
 
