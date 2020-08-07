@@ -36,10 +36,31 @@ entropy('HueyDeweyLouie');
       "max_entropy_scale": 128,   // a suggested scale for bar graphs,
                                   // note this can change in future versions
       "acceptable": false,  // standard for "acceptable" and "ideal" can change
+      "legal": true         // all the characters are acceptable
       "ideal": false        // or be configurable in future versions
     }
  */
 ```
+
+In code this can be configured using the `entropy.config()` method. This takes
+key and a value, or an object with key/value pairs. Omitting the value (in the 
+`(string, value)` form) resets that configuration to the default.
+
+```javascript
+entropy.config('minAcceptable', 24);
+entropy.config({minAcceptable: 24, minIdeal: 64});
+entropy.config('minAcceptable'); // sets to default value
+```
+
+* `minAcceptable` - (default: 64) the lowest entropy score considered
+  acceptable. That is, in the return object, the lowest entropy that have
+  `acceptable == true`.
+* `minIdeal` - (default: 96) the lowest entropy score considered ideal. If
+  `minIdeal` is set lower that `minAcceptable`, it will be ignored and
+  `ideal` will always be true when `acceptable` is true.
+* `characterClasses` - (default: `'all'`) a string or an array of strings,
+  each being either a class name or an alias for a preset list of class
+  names. Currently supported aliases are `'all'` and `'western'`. 
 
 ### On the command line
 
@@ -154,7 +175,7 @@ Password is not acceptable.
 
 ### v1.3
 
-* Added configuratability
+* Added configuratability for character sets and acceptable/ideal thresholds
 
 ### v1.2.1
 
