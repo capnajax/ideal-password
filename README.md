@@ -1,6 +1,6 @@
 # ideal-password
 
-Password entropy test, loosely inspired by [XKCD](https://xkcd.com/936/). Key
+Password entropy test, loosely inspired by [xkcd](https://xkcd.com/936/). Key
 features:
 
 * Detects most frequently used passwords and common l33t-ized and mix-case
@@ -212,7 +212,11 @@ members `entropy`, `ideal`, and `acceptable` will remain the same.
 No functionality will be removed, though, as always, the formula may be updated
 to account for more character sets or change the weight on existing ones.
 
-### v1.3.1 (current release)
+### v1.3.2 (current release)
+
+* Documentation updates
+
+### v1.3.1
 
 * Added accented characters sers for Roman, Greek, and Cyrillic
 * Hanzi classes cancel, so mixing common and less-common Chinese characters
