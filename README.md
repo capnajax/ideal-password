@@ -6,12 +6,12 @@ features:
 * Detects most frequently used passwords and common l33t-ized and mix-case
     versions of these passwords. For example, `password` is equivalent to
     `Pa55w0rD`.
+* Detects uppercase, lowercase, special, emoji, and several non-latin
+    character sets and gives credit for the number of character sets
+    represented.
 * Detects repeated characters and excludes them. For example `aaaaaaaaaaa`
     gets the same score as `a` and `passwordpassword` and `passwordPa55w0rd`
     gets the same score as `password`.
-* Detects uppercase, lowercase, special, emoji, and several non-roman
-    character classes and gives credit for the number of character classes
-    represented.
 
 ## Usage
 
@@ -29,16 +29,17 @@ const entropy = require('ideal-password');
 entropy('HueyDeweyLouie');
 /* Returns
     {
-      "classNames": [       // see section on character classes below
-        "upper-roman",
-        "lower-roman" ],
-      "length": 9,          // note this only counts unique characters
-      "entropy": 58.64573768438668,
-      "max_entropy_scale": 128,   // a suggested scale for bar graphs,
-                                  // note this can change in future versions
+      "sets": [             // see section on token sets below
+        "latin-capital",
+        "latin-small" ],
+      "length": 9,          // note this only counts *unique* tokens
+      "entropy": 58.64573768438668, 
+                            // ranges from zero to infinity. For the purpose
+                            // of bar charts, 128 is a good maximum for the
+                            // scale
       "acceptable": false,  // standard for "acceptable" and "ideal" can change
-      "legal": true         // all the characters are acceptable
-      "ideal": false        // or be configurable in future versions
+      "ideal": false,       // or be configurable in future versions
+      "legal": true         // all the tokens are acceptable.
     }
  */
 ```
@@ -59,19 +60,19 @@ entropy.config('minAcceptable'); // sets to default value
 * `minIdeal` - (default: 96) the lowest entropy score considered ideal. If
   `minIdeal` is set lower that `minAcceptable`, it will be ignored and
   `ideal` will always be true when `acceptable` is true.
-* `characterClasses` - (default: `'all'`) a string or an array of strings,
-  each being either a class name or an alias for a preset list of class
-  names. Currently supported aliases are `'all'` and `'western'`. 
+* `sets` - (default: `'all'`) a string or an array of strings,
+  each being either a token set name or an alias for a preset list of token
+  set names. Currently supported aliases are `'all'` and `'western'`. 
 
 ### On the command line
 
 ```sh
 % npm install -g ideal-password
 
-% entropy HueyDeweyLouie
+% entropy HueyDeweyLouie 
 Entropy score for "HueyDeweyLouie": 58.64573768438668
   Unique characters : 9
-  Character classes : upperRoman,lowerRoman
+  Token sets: latin-capital, latin-small
 Password is not acceptable.
 ```
 
@@ -86,110 +87,122 @@ a tiny fix.
 ## Formula
 
 This formula estimates the entropy by multiplying the number of characters by
-the size of character classes represented. Each unique character is only
+a weight for each of the token sets represented. Each unique character is only
 counted once. That is, `000` counts the same as `0`, `HueyDeweyLouie` counts
 as `HueyDwLoi`.
 
-### Character classes
+### token sets
 
-A character class is a type of character. These character classes are identified:
+A "token" is usualy a single character, but in the case of common passwords or
+complex emoji, a token is composed of multiple characters.
+
+A "token set" is a type of token. These token sets are identified:
 
 * `common-passwords` e.g. `Passw0rd`. Treats entire common password as a
     single token, case- and l33t-insensitive, e.g. `password` and `Pa55w0rD`
     are treated as the same.
 * `number` Arabic numerals
-* `lower-roman` Unaccented lowercase Roman alphabet
-* `upper-roman` Unaccented uppercase Roman alphabet
-* `extended-roman` Includes Latin 1 Supplement, Latins Extended A, B, C, D,
+* `latin-small` Unaccented lowercase Latin alphabet
+* `latin-capital` Unaccented uppercase Latin alphabet
+* `latin-extended` Includes Latin 1 Supplement, Latin Extended A, B, C, D,
     and E, IP Extensions, and Latin Extended Additional
 * `special` Includes `` !"#$%&'()*+,-./:;<=>?[\]^_` ``
-* `upper-greek` Unaccented uppercase Greek alphabet
-* `lower-greek` Unaccented lowercase Greek alphabet
-* `extended-greek` Includes letters from Greek Extended. For performance,
+* `greek-capital` Unaccented uppercase Greek alphabet
+* `greek-small` Unaccented lowercase Greek alphabet
+* `greek-extended` Includes letters from Greek Extended. For performance,
     includes some unassigned code points within the Greek Extended range.
-* `upper-cyrillic` Unaccented uppercase Cyrillic alphabet
-* `lower-cyrillic` Unaccented lowercase Cyrillic alphabet
-* `extended-cyrillic` Includes letters from Cyrillic Supplement, Cyrillic
-    Extended A, B, and C, and Cyrillic letters not included in `upper-cyrillic`
+* `cyrillic-capital` Unaccented uppercase Cyrillic alphabet
+* `cyrillic-small` Unaccented lowercase Cyrillic alphabet
+* `cyrillic-extended` Includes letters from Cyrillic Supplement, Cyrillic
+    Extended A, B, and C, and Cyrillic letters not included in `cyrillic-capital`
     or `lower-cyrillic`
 * `hiragana` Japanese Hiragana characters
 * `katakana` Japanese Hiragana characters
 * `bopomofo` Mandarin and Taiwanese phonetic symbols, includes characters from
     [Bopomofo](https://www.unicode.org/charts/PDF/U3100.pdf) and [Bopomofo Extended](https://www.unicode.org/charts/PDF/U31A0.pdf) character sets.
 * `hangul` Korean Hangul characters
-* `common-hanzi` 100 most common Chinese characters, in both Traditional and
+* `hanzi-common` 100 most common Chinese characters, in both Traditional and
     Simplified Chinese. Note results will never include both `common-hanzi`
     and `hanzi`. If both types of characters exist, only one type will be
     selected.
 * `hanzi` Chinese characters.
 * `emoji` Complex emoji are treated as single characters
 
-The `Unknown` class can include burred Roman and Cyrillic letters.
+Each token set has a score that is loosely based on the log of the number
+possible characters in that set.
 
-Each entropy class has a score that is loosely based on the log of the number
-possible characters in that class.
-
-As noted earlier, these character classes can be updated in future versions,
+As noted earlier, these token sets can be updated in future versions,
 and updates will not be considered "enhancements" or "breaking changes" for the
 purpose of semantic versioning.
 
 ### Examples
 
 In our example `HueyDeweyLouie`, there are nine unique characters over two
-character classes. Each of those character classes adds ln(26) to the
+token sets. Each of those token sets adds ln(26) to the
 entropy score, so we come to a score of 58.6.
 
 ```sh
-$ entropy HueyDeweyLouie
+$ HueyDeweyLouie 
 Entropy score for "HueyDeweyLouie": 58.64573768438668
   Unique characters : 9
-  Character classes : upper-roman,lower-roman
+  Token sets: latin-capital, latin-small
 Password is not acceptable.
 ```
 
 If they were all in lowercase, `hueydeweylouie`, even though the number of
 unique characters is still the same (`hueydwloi`), the entropy is even worse.
 
-```sh
-$ entropy hueydeweylouie
+```
+$ entropy hueydeweylouie 
 Entropy score for "hueydeweylouie": 29.32286884219334
   Unique characters : 9
-  Character classes : lower-roman
+  Token sets: latin-small
 Password is not acceptable.
 ```
 
-If we change on letter to an emoji, `Huey🦆eweyLouie`, now we have a third
-character class. This ups the score to 100.
+Adding a special character adds a third token set, improving the score to 81.
 
-```sh
+```
+$ entropy Huey#eweyLouie
+Entropy score for "Huey#eweyLouie": 81.00989753247869
+  Unique characters : 9
+  Token sets: latin-capital, latin-small, special
+Password is acceptable but not ideal.
+```
+
+If we change one letter to an emoji, `Huey🦆eweyLouie`, we up the score
+even more. This is because emoji have more weight than special characters.
+
+```
 $ entropy Huey🦆eweyLouie
 Entropy score for "Huey🦆eweyLouie": 100.09226935827951
   Unique characters : 9
-  Character classes : upper-roman,lower-roman,emoji
+  Token sets: latin-capital, latin-small, emoji
 Password is ideal.
 ```
 
 Common passwords or passwords that contain common passwords are treated
 harshly. A password that resembles a common password, `hell0hi`, got a
 low score of only 19. Notice the length is 3 because the `hello` was
-treated as a single "character" of class "common-password". Changing
+treated as a single "character" of the set "common-password". Changing
 the `o` to a `0` did not help either. The `hi` at the end was treated as
-two roman letters.
+two Latin letters.
 
-```sh
+```
 $ entropy hell0hi
 Entropy score for "hell0hi": 18.761486434726418
   Unique characters : 3
-  Character classes : common-passwords,lower-roman
+  Token sets: common-passwords, latin-small
 Password is not acceptable.
 ```
 
 ## Change history
 
-### v2.0 (future release)
+### v2.0 (current release)
 
-Version 2.0 will be a breaking change in that some vocabulary will change to
-bring this in line with Unicode standards:
+Version 2.0 is be a breaking change in that some vocabulary will change for
+semantic accuracy and to more closely match Unicode Consortiums's use of
+language:
 
 * `roman` becomes `latin`
 * `upper-roman` becomes `latin-capital`
@@ -205,14 +218,10 @@ bring this in line with Unicode standards:
 
 However `common-passwords` will remain as `common-passwords`
 
-Also "classes" become "sets" and "characters" will usuall become "tokens".
-While the output object may also change to reflect this vocabulary change,
-members `entropy`, `ideal`, and `acceptable` will remain the same.
+Also "classes" become "sets" and most "characters" become "tokens".
+The output object also changed in that now `classNames` are `sets`.
 
-No functionality will be removed, though, as always, the formula may be updated
-to account for more character sets or change the weight on existing ones.
-
-### v1.3.2 (current release)
+### v1.3.2
 
 * Documentation updates
 

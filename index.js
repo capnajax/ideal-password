@@ -10,7 +10,7 @@ const entropy = require('./lib/entropy');
     let score = entropy(pass);
     console.log(`Entropy score for "${pass}":`, score.entropy);
     console.log(`  Unique characters : ${score.length}`);
-    console.log(`  Character classes : ${score.classNames}`);
+    console.log(`  Token sets: ${score.sets.join(', ')}`);
     if (score.acceptable) {
       if (score.ideal) {
         console.log(`Password is ideal.`);
