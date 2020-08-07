@@ -39,29 +39,29 @@ describe('Entropy Configuration test', function() {
     e=entropy('passw⚽️rd');
     expect(e.legal).to.be.true;
 
-    entropy.config('characterClasses', ['lower-roman', 'emoji', 'common-passwords']);
+    entropy.config('sets', ['latin-small', 'emoji', 'common-passwords']);
     e=entropy('passw⚽️rd');
     expect(e.legal).to.be.true;
     e=entropy('paXXword');
     expect(e.legal).to.be.false;
 
-    entropy.config('characterClasses', ['lower-roman']);
+    entropy.config('sets', ['latin-small']);
     e=entropy('passw⚽️rd');
     expect(e.legal).to.be.false;
 
-    entropy.config('characterClasses', 'lower-roman');
-    e=entropy('passw⚽️rd');
-    expect(e.legal).to.be.false;
-    e=entropy('paxxword');
-    expect(e.legal).to.be.true;
-
-    entropy.config('characterClasses', 'western');
+    entropy.config('sets', 'latin-small');
     e=entropy('passw⚽️rd');
     expect(e.legal).to.be.false;
     e=entropy('paxxword');
     expect(e.legal).to.be.true;
 
-    entropy.config('characterClasses', ['western', 'emoji', 'common-passwords']);
+    entropy.config('sets', 'western');
+    e=entropy('passw⚽️rd');
+    expect(e.legal).to.be.false;
+    e=entropy('paxxword');
+    expect(e.legal).to.be.true;
+
+    entropy.config('sets', ['western', 'emoji', 'common-passwords']);
     e=entropy('passw⚽️rd');
     expect(e.legal).to.be.true;
     e=entropy('paxxword');
@@ -69,7 +69,7 @@ describe('Entropy Configuration test', function() {
     
     e=entropy('писанка');
     expect(e.legal).to.be.false;
-    entropy.config('characterClasses');
+    entropy.config('sets');
     e=entropy('писанка');
     expect(e.legal).to.be.true;
   });

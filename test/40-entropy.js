@@ -42,25 +42,25 @@ describe('Entropy Calculation test', function() {
 
   it('entropy of a simple password', function() {
     expect(test1.length).to.be.equal(control.length);
-    expect(test1.classNames.length).to.be.equal(1);
+    expect(test1.sets.length).to.be.equal(1);
     expect(test1.entropy).to.be.equal(control.entropy);
     expect(test2.length).to.be.equal(control.length + 1);
-    expect(test2.classNames.length).to.be.equal(1);
+    expect(test2.sets.length).to.be.equal(1);
     expect(test2.entropy).to.be.greaterThan(control.entropy);
     expect(test3.length).to.be.equal(control.length + 1);
-    expect(test3.classNames.length).to.be.equal(2);
+    expect(test3.sets.length).to.be.equal(2);
     expect(test3.entropy).to.be.greaterThan(control.entropy);
     expect(test3.entropy).to.be.greaterThan(test1.entropy);
     expect(test4.length).to.be.equal(control.length + 1);
-    expect(test4.classNames.length).to.be.equal(3);
+    expect(test4.sets.length).to.be.equal(3);
     expect(test4.entropy).to.be.greaterThan(control.entropy);
     expect(test4.entropy).to.be.greaterThan(test1.entropy);
   });
   it('entropy with special characters', function() {
     let test = function(e) {
-      expect(e.classNames).to.include('special');
+      expect(e.sets).to.include('special');
       expect(e.length).to.be.equal(test2.length);
-      expect(e.classNames.length).to.be.equal(test3.classNames.length);
+      expect(e.sets.length).to.be.equal(test3.sets.length);
       expect(e.entropy).to.be.greaterThan(control.entropy);
       // because special is a larger character class than number
       expect(e.entropy).to.be.greaterThan(test3.entropy); 
@@ -71,9 +71,9 @@ describe('Entropy Calculation test', function() {
   });
   it('entropy with a complex emoji', function() {
     let test = function(e) {
-      expect(e.classNames).to.include('emoji');
+      expect(e.sets).to.include('emoji');
       expect(e.length).to.be.equal(test2.length);
-      expect(e.classNames.length).to.be.equal(test3.classNames.length);
+      expect(e.sets.length).to.be.equal(test3.sets.length);
       expect(e.entropy).to.be.greaterThan(control.entropy);
       // because emoji is a larger character class than number
       expect(e.entropy).to.be.greaterThan(test3.entropy); 
@@ -86,9 +86,9 @@ describe('Entropy Calculation test', function() {
   });
   it('entropy with hanzi, common and rarer', function() {
     let test = function(e, c) {
-      expect(e.classNames).to.include(c);
+      expect(e.sets).to.include(c);
       expect(e.length).to.be.equal(test2.length);
-      expect(e.classNames.length).to.be.equal(test3.classNames.length);
+      expect(e.sets.length).to.be.equal(test3.sets.length);
       expect(e.entropy).to.be.greaterThan(control.entropy);
       // because emoji is a larger character class than number
       expect(e.entropy).to.be.greaterThan(test3.entropy); 
@@ -103,23 +103,23 @@ describe('Entropy Calculation test', function() {
     expect(hanziTest3.entropy).to.be.greaterThan(hanziTest1.entropy);
 
     expect(hanziTest5.entropy).to.be.equal(hanziControl2.entropy);
-    expect(hanziTest5.classNames).to.include('hanzi');
-    expect(hanziTest5.classNames).to.not.include('common-hanzi');
+    expect(hanziTest5.sets).to.include('hanzi');
+    expect(hanziTest5.sets).to.not.include('common-hanzi');
     expect(hanziTest6.entropy).to.be.equal(hanziControl1.entropy);
-    expect(hanziTest6.classNames).to.not.include('hanzi');
-    expect(hanziTest6.classNames).to.include('common-hanzi');
+    expect(hanziTest6.sets).to.not.include('hanzi');
+    expect(hanziTest6.sets).to.include('common-hanzi');
   });
   it('entropy with a bad password', function() {
     expect(control.entropy).to.be.greaterThan(badPassword1.entropy);
     expect(badPassword2.entropy).to.be.equal(badPassword1.entropy);
     expect(control.entropy).to.be.greaterThan(badPassword3.entropy);
     expect(badPassword3.entropy).to.be.greaterThan(badPassword1.entropy);
-    expect(badPassword1.classNames.length).to.be.equal(1);
-    expect(badPassword2.classNames.length).to.be.equal(1);
-    expect(badPassword1.classNames).to.include('common-passwords');
-    expect(badPassword2.classNames).to.include('common-passwords');
-    expect(badPassword3.classNames).to.include('common-passwords');
-    expect(badPassword3.classNames).to.include('lower-roman');
+    expect(badPassword1.sets.length).to.be.equal(1);
+    expect(badPassword2.sets.length).to.be.equal(1);
+    expect(badPassword1.sets).to.include('common-passwords');
+    expect(badPassword2.sets).to.include('common-passwords');
+    expect(badPassword3.sets).to.include('common-passwords');
+    expect(badPassword3.sets).to.include('latin-small');
     expect(badPassword3.entropy).to.be.equal(badPassword4.entropy);
   });
 });
