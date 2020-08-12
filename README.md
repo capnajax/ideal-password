@@ -33,7 +33,7 @@ entropy('HueyDeweyLouie');
         "latin-capital",
         "latin-small" ],
       "length": 9,          // note this only counts *unique* tokens
-      "entropy": 58.64573768438668, 
+      "entropy": 58.64573768438668,
                             // ranges from zero to infinity. For the purpose
                             // of bar charts, 128 is a good maximum for the
                             // scale
@@ -45,7 +45,7 @@ entropy('HueyDeweyLouie');
 ```
 
 In code this can be configured using the `entropy.config()` method. This takes
-key and a value, or an object with key/value pairs. Omitting the value (in the 
+key and a value, or an object with key/value pairs. Omitting the value (in the
 `(string, value)` form) resets that configuration to the default.
 
 ```javascript
@@ -62,14 +62,14 @@ entropy.config('minAcceptable'); // sets to default value
   `ideal` will always be true when `acceptable` is true.
 * `sets` - (default: `'all'`) a string or an array of strings,
   each being either a token set name or an alias for a preset list of token
-  set names. Currently supported aliases are `'all'` and `'western'`. 
+  set names. Currently supported aliases are `'all'` and `'western'`.
 
 ### On the command line
 
 ```sh
 % npm install -g ideal-password
 
-% entropy HueyDeweyLouie 
+% entropy HueyDeweyLouie
 Entropy score for "HueyDeweyLouie": 58.64573768438668
   Unique characters : 9
   Token sets: latin-capital, latin-small
@@ -142,7 +142,7 @@ token sets. Each of those token sets adds ln(26) to the
 entropy score, so we come to a score of 58.6.
 
 ```sh
-$ HueyDeweyLouie 
+$ HueyDeweyLouie
 Entropy score for "HueyDeweyLouie": 58.64573768438668
   Unique characters : 9
   Token sets: latin-capital, latin-small
@@ -152,8 +152,8 @@ Password is not acceptable.
 If they were all in lowercase, `hueydeweylouie`, even though the number of
 unique characters is still the same (`hueydwloi`), the entropy is even worse.
 
-```
-$ entropy hueydeweylouie 
+```sh
+$ entropy hueydeweylouie
 Entropy score for "hueydeweylouie": 29.32286884219334
   Unique characters : 9
   Token sets: latin-small
@@ -162,7 +162,7 @@ Password is not acceptable.
 
 Adding a special character adds a third token set, improving the score to 81.
 
-```
+```sh
 $ entropy Huey#eweyLouie
 Entropy score for "Huey#eweyLouie": 81.00989753247869
   Unique characters : 9
@@ -173,7 +173,7 @@ Password is acceptable but not ideal.
 If we change one letter to an emoji, `Huey🦆eweyLouie`, we up the score
 even more. This is because emoji have more weight than special characters.
 
-```
+```sh
 $ entropy Huey🦆eweyLouie
 Entropy score for "Huey🦆eweyLouie": 100.09226935827951
   Unique characters : 9
@@ -188,7 +188,7 @@ treated as a single "character" of the set "common-password". Changing
 the `o` to a `0` did not help either. The `hi` at the end was treated as
 two Latin letters.
 
-```
+```sh
 $ entropy hell0hi
 Entropy score for "hell0hi": 18.761486434726418
   Unique characters : 3
@@ -200,7 +200,7 @@ Password is not acceptable.
 
 ### v2.0 (current release)
 
-Version 2.0 is be a breaking change in that some vocabulary will change for
+Version 2.0 is a breaking change in that some vocabulary will change for
 semantic accuracy and to more closely match Unicode Consortiums's use of
 language:
 
