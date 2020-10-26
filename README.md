@@ -198,7 +198,12 @@ Password is not acceptable.
 
 ## Change history
 
-### v2.1 (current release)
+### v2.2 (current release)
+
+Added new configuration features to allow user-supplied common passwords.
+Added more character sets.
+
+### v2.1
 
 The algorithm for detecting character ranges changed to allow for detecting
 even more character sets and finer-grained classification with little
