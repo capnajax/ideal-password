@@ -200,8 +200,9 @@ Password is not acceptable.
 
 ### v2.1 (current release)
 
-The algorithm for detecting non-roman character ranges changed to allow for
-detecting even more character sets with little performance loss.
+The algorithm for detecting character ranges changed to allow for detecting
+even more character sets and finer-grained classification with little
+performance loss.
 
 ### v2.0
 
