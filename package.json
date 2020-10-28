@@ -22,7 +22,8 @@
     "lib": "lib"
   },
   "devDependencies": {
-    "chai": "^4.2.0"
+    "chai": "^4.2.0",
+    "eslint": "^7.12.1"
   },
   "keywords": [
     "password",
