@@ -1,10 +1,11 @@
 {
   "name": "ideal-password",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Password entropy test, loosely inspired by xkcd",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint index.js lib/*.js test/*.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "password",
     "entropy",
     "strength",
+    "bad-password",
     "ideal-password",
     "acceptable-password",
     "password-entropy",
