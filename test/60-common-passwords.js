@@ -18,12 +18,6 @@ describe('Common Passwords test', function() {
   let customPassword3 = entropy('inky');
   let customPassword4 = entropy('clyd3');
 
-  console.log({
-    customPassword1,
-    customPassword2,
-    customPassword3,
-    customPassword4});
-
   it('entropy with a default bad password', function() {
     expect(control.entropy).to.be.greaterThan(badPassword1.entropy);
     expect(badPassword2.entropy).to.be.equal(badPassword1.entropy);
