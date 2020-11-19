@@ -240,7 +240,11 @@ Password is not acceptable.
 
 ## Change history
 
-### v2.2 (current release)
+### v2.3
+
+Browser and typescript usability
+
+### v2.2
 
 Added new configuration features to allow user-supplied common passwords.
 Added more character sets.
