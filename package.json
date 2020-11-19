@@ -2,7 +2,7 @@
   "name": "ideal-password",
   "version": "2.1.0",
   "description": "Password entropy test, loosely inspired by xkcd",
-  "main": "index.js",
+  "main": "lib/entropy.js",
   "scripts": {
     "test": "mocha"
   },
