@@ -64,7 +64,7 @@ describe('Entropy Calculation test', function() {
       expect(e.entropy).to.be.greaterThan(control.entropy);
       // because special is a larger character class than number
       expect(e.entropy).to.be.greaterThan(test3.entropy); 
-    }
+    };
     test(specialTest1);
     test(specialTest2);
     expect(specialTest1.entropy).to.be.equal(specialTest2.entropy);
@@ -77,7 +77,7 @@ describe('Entropy Calculation test', function() {
       expect(e.entropy).to.be.greaterThan(control.entropy);
       // because emoji is a larger character class than number
       expect(e.entropy).to.be.greaterThan(test3.entropy); 
-    }
+    };
     test(emojiTest1);
     test(emojiTest2);
     test(emojiTest3);
@@ -92,7 +92,7 @@ describe('Entropy Calculation test', function() {
       expect(e.entropy).to.be.greaterThan(control.entropy);
       // because emoji is a larger character class than number
       expect(e.entropy).to.be.greaterThan(test3.entropy); 
-    }
+    };
     test(hanziTest1, 'common-hanzi');
     test(hanziTest2, 'common-hanzi');
     test(hanziTest3, 'hanzi');

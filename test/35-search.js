@@ -12,7 +12,7 @@ const debug = false;
 
 function stringTest(str, sets) {
   for (var i = 0; i < str.length; i++) {
-    let searchResult = ranges.search(str.codePointAt(i))
+    let searchResult = ranges.search(str.codePointAt(i));
     debug && console.log(str, sets, searchResult);
     expect(searchResult.known).to.be.true;
     expect(sets).to.include(searchResult.range.name);
