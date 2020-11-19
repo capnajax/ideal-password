@@ -44,6 +44,8 @@ entropy('HueyDeweyLouie');
  */
 ```
 
+#### config
+
 In code this can be configured using the `entropy.config()` method. This takes
 key and a value, or an object with key/value pairs. Omitting the value (in the
 `(string, value)` form) resets that configuration to the default.
@@ -63,6 +65,33 @@ entropy.config('minAcceptable'); // sets to default value
 * `sets` - (default: `'all'`) a string or an array of strings,
   each being either a token set name or an alias for a preset list of token
   set names. Currently supported aliases are `'all'` and `'western'`.
+
+#### bad passwords
+
+This module detects bad passwords from a list of common passwords. In some
+situations industry jargon may also emerge as easily guessable passwords. The
+`addCommonPasswords` method will automatically check for l33t and mixed case
+versions of passwords.
+
+```javascript
+// pass new passwords as an array or as a individual parameters.
+entropy.addCommonPasswords(['Blinky', 'Pinky', 'Inky', 'Clyde']);
+// or
+entropy.addCommonPasswords('Blinky', 'Pinky', 'Inky', 'Clyde');
+
+entropy('clYd3');
+/* Returns
+  {
+    sets: [ 'common-passwords' ],
+    length: 1,
+    entropy: 2.995732273553991,
+    max_entropy_scale: 128,
+    legal: true,
+    acceptable: false,
+    ideal: false
+  }
+ */
+```
 
 ### On the command line
 
@@ -101,6 +130,7 @@ A "token set" is a type of token. These token sets are identified:
 * `common-passwords` e.g. `Passw0rd`. Treats entire common password as a
     single token, case- and l33t-insensitive, e.g. `password` and `Pa55w0rD`
     are treated as the same.
+* `white-space` All white space characters
 * `number` Arabic numerals
 * `latin-small` Unaccented lowercase Latin alphabet
 * `latin-capital` Unaccented uppercase Latin alphabet
@@ -114,12 +144,24 @@ A "token set" is a type of token. These token sets are identified:
 * `cyrillic-capital` Unaccented uppercase Cyrillic alphabet
 * `cyrillic-small` Unaccented lowercase Cyrillic alphabet
 * `cyrillic-extended` Includes letters from Cyrillic Supplement, Cyrillic
-    Extended A, B, and C, and Cyrillic letters not included in `cyrillic-capital`
-    or `lower-cyrillic`
+    Extended A, B, and C, and Cyrillic letters not included in
+    `cyrillic-capital` or `lower-cyrillic`
+* `arabic` Arabic alphabet
+* `arabic-extended` Includes characters from the Arabic Extended A block.
+* `devangari`
+* `bengali`
+* `tamil`
+* `telagu`
+* `devangari`
+* `kannada`
+* `malayalam`
+* `thai`
 * `hiragana` Japanese Hiragana characters
 * `katakana` Japanese Hiragana characters
 * `bopomofo` Mandarin and Taiwanese phonetic symbols, includes characters from
-    [Bopomofo](https://www.unicode.org/charts/PDF/U3100.pdf) and [Bopomofo Extended](https://www.unicode.org/charts/PDF/U31A0.pdf) character sets.
+    [Bopomofo](https://www.unicode.org/charts/PDF/U3100.pdf) and
+    [Bopomofo Extended](https://www.unicode.org/charts/PDF/U31A0.pdf) character
+    sets.
 * `hangul` Korean Hangul characters
 * `hanzi-common` 100 most common Chinese characters, in both Traditional and
     Simplified Chinese. Note results will never include both `common-hanzi`
@@ -198,7 +240,16 @@ Password is not acceptable.
 
 ## Change history
 
-### v2.1 (current release)
+### v2.3
+
+Browser and typescript usability
+
+### v2.2
+
+Added new configuration features to allow user-supplied common passwords.
+Added more character sets.
+
+### v2.1
 
 The algorithm for detecting character ranges changed to allow for detecting
 even more character sets and finer-grained classification with little
