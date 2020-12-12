@@ -157,7 +157,7 @@ A "token set" is a type of token. These token sets are identified:
 * `malayalam`
 * `thai`
 * `hiragana` Japanese Hiragana characters
-* `katakana` Japanese Hiragana characters
+* `katakana` Japanese Katakana characters
 * `bopomofo` Mandarin and Taiwanese phonetic symbols, includes characters from
     [Bopomofo](https://www.unicode.org/charts/PDF/U3100.pdf) and
     [Bopomofo Extended](https://www.unicode.org/charts/PDF/U31A0.pdf) character
@@ -284,7 +284,7 @@ The output object also changed in that now `classNames` are `sets`.
 
 ### v1.3.1
 
-* Added accented characters sers for Roman, Greek, and Cyrillic
+* Added accented characters sets for Roman, Greek, and Cyrillic
 * Hanzi classes cancel, so mixing common and less-common Chinese characters
   will not result in a higher score than using only less-common characters
 
