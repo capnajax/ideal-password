@@ -240,6 +240,10 @@ Password is not acceptable.
 
 ## Change history
 
+### v2.3.1
+
+`npm audit fix` to update vulnerable package dependencies 
+
 ### v2.3
 
 Browser and typescript usability
