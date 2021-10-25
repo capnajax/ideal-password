@@ -1,6 +1,6 @@
 {
   "name": "ideal-password",
-  "version": "2.4",
+  "version": "2.4.0",
   "description": "Password entropy test, loosely inspired by xkcd",
   "main": "lib/entropy.js",
   "scripts": {
